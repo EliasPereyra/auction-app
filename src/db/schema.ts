@@ -38,7 +38,7 @@ export const bids = pgTable("bids", {
   productId: serial("productId")
     .notNull()
     .references(() => products.id, { onDelete: "cascade" }),
-  userId: serial("userId")
+  userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
 });
@@ -46,9 +46,9 @@ export const bids = pgTable("bids", {
 export const accounts = pgTable(
   "accounts",
   {
-    userId: serial("userId")
+    userId: text("userId")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => users.id),
     type: text("type").$type<AdapterAccount>().notNull(),
     provider: text("provider").notNull(),
     providerAccountId: text("providerAccountId").notNull(),
@@ -70,7 +70,7 @@ export const accounts = pgTable(
 export const sessions = pgTable("sessions", {
   sessionToken: text("sessionToken").primaryKey(),
   expires: timestamp("expires", { mode: "date" }).notNull(),
-  userId: serial("userId")
+  userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
 });
